@@ -22,13 +22,13 @@ html {
 ** COMPONENTS
 *********************************************************************/
 .button {
+  background-color: #bab9ba;
+  border-radius: 8px;
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  padding: 5px;
   text-transform: bold uppercase;
   width: 126px;
-  font-size: 30px;
-  font-family: "VT323", monospace;
-  padding: 5px;
-  border-radius: 8px;
-  background-color: #bab9ba;
 }
 
 /********************************************************************* 
@@ -41,18 +41,18 @@ html {
 }
 
 .title h1 {
-  margin: 0;
-  font-size: 3em;
-  color: #0c0c0c;
-  padding: 5px;
   border-radius: 5px;
+  color: #0c0c0c;
+  font-size: 3em;
+  margin: 0;
+  padding: 5px;
 }
 
 .game-info {
   display: flex;
-  margin: 0;
-  padding: 5px;
   font-size: 1.15em;
+  margin: 0;
+  padding: 15px;
 }
 
 .game-info--description {
@@ -60,11 +60,11 @@ html {
 }
 
 .game-info--buttons {
-  flex: 1;
+  align-items: flex-start;
   display: flex;
-  margin-top: 20px;
-  align-items: center;
+  flex: 1;
   justify-content: space-around;
+  margin-top: 20px;
 }
 
 .game-info--toggle {
@@ -79,27 +79,29 @@ datalist {
 ** LAYOUT
 *********************************************************************/
 .cards {
-  display: flex;
-  padding: 20px;
-  justify-content: space-evenly;
   align-items: center;
+  display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 20px;
 }
 
 .card {
-  margin-top: 15px;
-  font-size: 6em;
-  width: 215px;
-  height: 285px;
-  border: black 2px solid;
   border-radius: 10px;
+  border: black 2px solid;
+  font-size: 6em;
+  height: 285px;
+  margin-top: 15px;
+  width: 215px;
+}
+
+.card--back {
   background: url(./img/doggo.jpg);
   background-size: cover;
 }
 
-.front-face {
-  width: 100px;
-  height: 500px;
+.card--front {
+  background: blue;
 }
 
 /********************************************************************* 
