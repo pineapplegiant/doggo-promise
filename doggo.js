@@ -18,4 +18,6 @@ function addNewDoggo() {
     });
 }
 
-document.querySelector(".add-doggo").addEventListener("click", addNewDoggo);
+document
+  .querySelector(".button--add-doggo")
+  .addEventListener("click", addNewDoggo);

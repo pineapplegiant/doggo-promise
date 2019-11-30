@@ -1,10 +1,13 @@
-/*CSS for the cool kids*/
+/********************************************************************* 
+** GLOBAL STYLES
+*********************************************************************/
 html {
   box-sizing: border-box;
   margin: 0;
   height: 100%;
   font-weight: normal;
-  font-family: "Roboto Slab", serif;
+  font-family: "VT323", monospace;
+  background-color: #f0efed;
 }
 
 *,
@@ -13,20 +16,83 @@ html {
   box-sizing: inherit;
 }
 
-button {
+/*rgb(164, 116, 44)"*/
+
+/********************************************************************* 
+** COMPONENTS
+*********************************************************************/
+.button {
   text-transform: bold uppercase;
+  width: 126px;
+  font-size: 30px;
+  font-family: "VT323", monospace;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: #bab9ba;
 }
 
+/********************************************************************* 
+** TITLE & INFO
+*********************************************************************/
 .title {
-  font-size: 36px;
-  background-color: black;
-  color: white;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.doggos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+.title h1 {
+  margin: 0;
+  font-size: 3em;
+  color: #0c0c0c;
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.doggo {
+.game-info {
+  display: flex;
+  margin: 0;
+  padding: 5px;
+  font-size: 1.15em;
+}
+
+.game-info--description {
+  flex: 1;
+}
+
+.game-info--toggle {
+  display: flex;
+  flex-direction: column;
+}
+.game-info--buttons {
+  flex: 1;
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: space-around;
+}
+/********************************************************************* 
+** LAYOUT
+*********************************************************************/
+.cards {
+  display: flex;
+  padding: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin-top: 15px;
+  font-size: 6em;
+  width: 215px;
+  height: 285px;
+  border: black 2px solid;
+  border-radius: 10px;
+  background: url(./img/doggo.jpg);
+  background-size: cover;
+}
+
+.front-face {
+  width: 100px;
+  height: 500px;
 }
