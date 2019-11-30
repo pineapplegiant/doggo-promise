@@ -59,16 +59,21 @@ html {
   flex: 1;
 }
 
-.game-info--toggle {
-  display: flex;
-  flex-direction: column;
-}
 .game-info--buttons {
   flex: 1;
   display: flex;
   margin-top: 20px;
   align-items: center;
   justify-content: space-around;
+}
+
+.game-info--toggle {
+  display: flex;
+  flex-direction: column;
+}
+
+datalist {
+  display: inline-flex;
 }
 /********************************************************************* 
 ** LAYOUT
@@ -95,4 +100,13 @@ html {
 .front-face {
   width: 100px;
   height: 500px;
+}
+
+/********************************************************************* 
+** MEDIA QUERIES
+*********************************************************************/
+@media only screen and (max-width: 650px) {
+  .game-info {
+    flex-direction: column;
+  }
 }
