@@ -1,6 +1,10 @@
 # Doggo-Promise JS
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![A badge for flexing Vanilla JS](https://img.shields.io/badge/vanilla-javascript-brightgreen)
+![I USE VIM HEHEHE](https://img.shields.io/badge/made%20with-vim%E2%9D%A4%EF%B8%8F-blue)
 
-A {soon-to-be} simple fun card game with doggos :')
+
+A _soon-to-be_ simple fun card game with doggos :') 
 
 
 ## Special Thanks
