@@ -16,13 +16,23 @@ html {
   box-sizing: inherit;
 }
 
+/*Height & Width for cards*/
+:root {
+  --card-width: 170px;
+  --card-height: 250px;
+}
+
 /*rgb(164, 116, 44)"*/
 
 /********************************************************************* 
 ** COMPONENTS
 *********************************************************************/
+option {
+  padding-left: 2px;
+}
+
 .button {
-  background-color: #bab9ba;
+  background-color: #908e90;
   border-radius: 8px;
   font-family: "VT323", monospace;
   font-size: 30px;
@@ -31,6 +41,15 @@ html {
   width: 126px;
 }
 
+.button:hover {
+  cursor: pointer;
+  background-color: #b8b7b8;
+  transition: 0.2s;
+}
+
+.card-adder-input:hover {
+  cursor: pointer;
+}
 /********************************************************************* 
 ** TITLE & INFO
 *********************************************************************/
@@ -82,7 +101,7 @@ datalist {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-around;
   padding: 20px;
 }
 
@@ -90,9 +109,18 @@ datalist {
   border-radius: 10px;
   border: black 2px solid;
   font-size: 6em;
-  height: 285px;
-  margin-top: 15px;
-  width: 215px;
+  height: 250px;
+  margin-top: 10px;
+  width: var(--card-width);
+}
+
+/*.flip {*/
+/*back*/
+
+/*}*/
+
+.card:hover {
+  cursor: pointer;
 }
 
 .card--back {
@@ -111,4 +139,5 @@ datalist {
   .game-info {
     flex-direction: column;
   }
+  /* TODO: Make cards smaller for mobile */
 }
