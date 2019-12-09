@@ -6,19 +6,20 @@ const inputDoggos = document.querySelector("input"); // Input Slider
 const playGame = document.querySelector(".button--play-game"); // Play-Game Button
 const startOver = document.querySelector(".button--start-over"); // Start-Over Button
 
-// Internal Database Array of Doggos
+// Internal Array of Doggos
 let allTheCards = []; // [ [1, 2], [ 3,4 ], [ 5,6 ] ]
 
-// 1) Play Game!
+// 1 Play Game!
 playGame.addEventListener("click", function() {
   deleteCards(); // First delete cards
   createCards(inputDoggos.value); // Create the amount of cards given by the value of the slider
 });
 
-// 2) Start Over!
+// 2 Start Over!
 startOver.addEventListener("click", function() {
   deleteCards();
 });
+
 
 // This will create the amount of Doggo Cards
 function createCards(amountOfCards) {
@@ -46,7 +47,7 @@ function createCards(amountOfCards) {
 
   // Cards must exist to add eventListener to all of them
   const eachCard = Array.prototype.slice.call(cardCollection); // Convert to Array
-  eachCard.forEach(card => card.addEventListener("click", flipCard));
+  eachCard.forEach(card => card.addEventListener("mousedown", flipCard));
 }
 
 // Delete all the Doggos :'(

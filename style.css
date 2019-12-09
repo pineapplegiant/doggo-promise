@@ -103,6 +103,7 @@ datalist {
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 20px;
+  perspective: 1000px;
 }
 
 .card {
@@ -112,15 +113,20 @@ datalist {
   height: 250px;
   margin-top: 10px;
   width: var(--card-width);
+  /*Make shit 3d*/
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform 0.2s;
 }
-
-/*.flip {*/
-/*back*/
-
-/*}*/
 
 .card:hover {
   cursor: pointer;
+}
+
+.card:active {
+  /*Give em some bounce yo*/
+  transform: scale(0.96);
+  transition: transform 0.2s;
 }
 
 .card--back {
@@ -129,6 +135,8 @@ datalist {
 }
 
 .card--front {
+  transform: rotateY(180deg);
+  transition: transform 0.2s;
   background: blue;
 }
 
