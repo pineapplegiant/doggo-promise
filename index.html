@@ -23,7 +23,7 @@
           selected. Input the amount of cards you want to play with, press "Play
           Game" then keep guessing until there are no more cards left!
         </p>
-        <div class="game-info--buttons buttons ">
+        <div class="game-info--buttons buttons">
           <div class="game-info--toggle">
             <label class="game-info--toggle--label" for="cards-adder"
               >Amount of Doggos</label
@@ -49,12 +49,24 @@
               list="tickmarks"
             />
           </div>
+          <!--Buttons-->
           <button class="button button--play-game">Play Game!</button>
           <button class="button button--start-over">Start Over</button>
         </div>
       </div>
     </header>
-    <section class="cards"></section>
+    <!--Doggo Cards-->
+    <section class="cards">
+      <div class="card">
+        <img
+          class="card--back"
+          src="./img/doggo2.jpg"
+          alt="Back of card"
+          srcset=""
+        />
+        <img class="card--front" src="" alt="" srcset="" />
+      </div>
+    </section>
   </body>
   <script src="doggo.js"></script>
 </html>

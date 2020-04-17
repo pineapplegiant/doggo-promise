@@ -28,5 +28,4 @@ A _soon-to-be_ simple fun card game with doggos :')
 ## Built With/Things I learned:
 * The [Vanilla JS](http://vanilla-js.com/) framework.
 * I learned about [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) - fetch's and response's json's
-* How to do the flip animation stuff to!
-
+* How to do flip animation stuff!
