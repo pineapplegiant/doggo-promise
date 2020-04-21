@@ -6,7 +6,10 @@
 ![I USE VIM HEHEHE](https://img.shields.io/badge/made%20with-vim%E2%9D%A4%EF%B8%8F-blue)
 
 
-A _soon-to-be_ simple fun card game with doggos :') 
+A scrappy built card game with doggos :') 🐶
+
+<img src="./img/readme.png" alt="Doggo Game Screenshot" >
+
 
 
 ## Special Thanks
