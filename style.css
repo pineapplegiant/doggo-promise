@@ -38,8 +38,8 @@ option {
   font-family: "VT323", monospace;
   font-size: 30px;
   padding: 5px;
-  text-transform: bold uppercase;
-  width: 126px;
+  text-transform: uppercase;
+  /*width: 110px;*/
 }
 
 .button:hover {
@@ -163,7 +163,7 @@ datalist {
   }
   /* TODO: Make cards smaller for mobile */
   :root {
-    --card-width: 170px;
-    --card-height: 250px;
+    --card-width: 80px;
+    --card-height: 110px;
   }
 }

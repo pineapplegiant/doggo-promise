@@ -5,7 +5,8 @@ const cardCollection = cards.children; // The children of the cards (imgs)
 const inputDoggos = document.querySelector("input"); // Input Slider
 const playGameButton = document.querySelector(".button--play-game"); // Play-Game Button
 
-let doggoImages = ["./img/1.jpg", "./img/2.jpg", "./img/3.jpg", "./img/4.jpg"];
+let images = ["./img/1.jpg", "./img/2.jpg", "./img/3.jpg", "./img/4.jpg"];
+let doggoImages;
 
 let hasFlippedCard = false;
 let lockBoard = false;
@@ -17,36 +18,38 @@ playGameButton.addEventListener("click", function () {
   deleteCards();
 
   // 2 CALL THE API
-  //getDoggos(inputDoggos.value);
+  getDoggos(inputDoggos.value / 2); // Rest of methods called here
 
-  // 3 CREATE THE CARDS INPUT
-  //createCards(inputDoggos.value);
-  createCards(8); //TESTING
-
-  // 4 GIVE CARDS THE DOGGO IMAGES
-  renderCards();
-
-  // 5 SHUFFLE CARDS
-  shuffleCards(8);
 });
 
-function addNewDoggo() {
+function getDoggos(amountOfDoggos) {
   /**
    * Calls the dog.ceo API and creates and the doggoImages array
    * This will become the front of the cards
    */
-  const promise = fetch(DOG_URL);
+
+  // Set to empty array first
+  doggoImages = [];
+  const promise = fetch(`${DOG_URL}/${amountOfDoggos}`);
   promise
     .then(function (response) {
       const processingPromise = response.json();
       return processingPromise;
     })
     .then(function (processedResponse) {
-      const img = document.createElement("img");
-      img.classList = "doggo";
-      img.src = processedResponse.message;
-      img.alt = "Cute doggo";
-      doggos.appendChild(img);
+      for (let dog of processedResponse["message"]) {
+        doggoImages.push(dog);
+      }
+
+      // Call the methods after the API CALL
+      // 3 CREATE THE CARDS
+      createCards(inputDoggos.value);
+
+      // 4 GIVE CARDS THE DOGGO IMAGES
+      renderCards();
+
+      // 5 SHUFFLE CARDS
+      shuffleCards(inputDoggos.value);
     });
 }
 
@@ -67,8 +70,8 @@ function createCards(amountOfCards) {
     backOfCard.className = "card--back";
     frontOfCard.className = "card--front";
     backOfCard.src = "./img/doggo2.jpg";
-    frontOfCard.src =
-      "https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg";
+    //frontOfCard.src =
+      //"https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg";
 
     // Append images: Div>BackImg>FrontImg
     newCard.appendChild(backOfCard);
@@ -97,11 +100,11 @@ function renderCards() {
       imageCounter++;
     }
 
-    // Back Card img
+    // Assignment of Back Card img
     eachCard[cardCounter].children[1].src = doggoImages[imageCounter];
 
     // Add Flip Card Event Listener to each card
-    eachCard[cardCounter].addEventListener("click", flipCard);
+    eachCard[cardCounter].addEventListener("mousedown", flipCard);
   }
 }
 
@@ -152,7 +155,7 @@ function unflipCards() {
     secondCard.classList.remove("flip");
 
     resetBoard();
-  }, 1420);
+  }, 1400);
 }
 
 function disableCards() {
@@ -163,12 +166,12 @@ function disableCards() {
 
 function resetBoard() {
   [hasFlippedCard, lockBoard] = [false, false];
-  [firstCard, secondCard] = [null,  null];
+  [firstCard, secondCard] = [null, null];
 }
 
 function shuffleCards(numberofCards) {
-  cards.querySelectorAll("*").forEach(card => {
-  let randomPos = Math.floor(Math.random() * numberofCards);
+  cards.querySelectorAll("*").forEach((card) => {
+    let randomPos = Math.floor(Math.random() * numberofCards);
     card.style.order = randomPos;
   });
 }
