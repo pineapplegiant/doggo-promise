@@ -19,7 +19,6 @@ playGameButton.addEventListener("click", function () {
 
   // 2 CALL THE API
   getDoggos(inputDoggos.value / 2); // Rest of methods called here
-
 });
 
 function getDoggos(amountOfDoggos) {
@@ -27,9 +26,11 @@ function getDoggos(amountOfDoggos) {
    * Calls the dog.ceo API and creates and the doggoImages array
    * This will become the front of the cards
    */
-
-  // Set to empty array first
-  doggoImages = [];
+  if (amountOfDoggos > 20) {
+    alert(`How dare you hack this, max is 20 doggos!\n not ${amountOfDoggos} `);
+    return;
+  }
+  doggoImages = []; // Set to empty array first
   const promise = fetch(`${DOG_URL}/${amountOfDoggos}`);
   promise
     .then(function (response) {
@@ -71,7 +72,7 @@ function createCards(amountOfCards) {
     frontOfCard.className = "card--front";
     backOfCard.src = "./img/doggo2.jpg";
     //frontOfCard.src =
-      //"https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg";
+    //"https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg";
 
     // Append images: Div>BackImg>FrontImg
     newCard.appendChild(backOfCard);
@@ -121,7 +122,10 @@ function flipCard() {
    * That transforms the background from back to front
    */
   if (lockBoard) return; // Edgecase lockboard after firstCard click
-  if (this === firstCard) return; // Edgecase secondCard cannot be firstCard too
+  // Edgecase secondCard cannot be firstCard too
+  if (this === firstCard) return;
+  // Edgecase for repeatedly clicking on an already clicked card
+  if (this.classList.contains("flip")) return;
 
   this.classList.add("flip");
 
