@@ -104,12 +104,15 @@ datalist {
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 20px;
+  max-width: 1250px;
+  margin: 0 auto;
 
   /*Allow for 3d effect */
   perspective: 1000px;
 }
 
 .card {
+  margin: 12px;
   border-radius: 5px;
   border: black 2px solid;
   font-size: 6em;
