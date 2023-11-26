@@ -70,8 +70,9 @@ option {
 
 .game-info {
   display: flex;
-  font-size: 1.15em;
-  margin: 0;
+  font-size: 1.35em;
+  max-width: 1250px;
+  margin: 0 auto;
   padding: 15px;
 }
 
