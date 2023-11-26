@@ -1,3 +1,6 @@
+/********************************************************************* 
+** Variables
+*********************************************************************/ 
 const DOG_URL = "https://dog.ceo/api/breeds/image/random"; // DOG CEO Random API
 
 const cards = document.querySelector(".cards"); // Cards Section to append cards to
@@ -5,21 +8,47 @@ const cardCollection = cards.children; // The children of the cards (imgs)
 const inputDoggos = document.querySelector("input"); // Input Slider
 const playGameButton = document.querySelector(".button--play-game"); // Play-Game Button
 
-let images = ["./img/1.jpg", "./img/2.jpg", "./img/3.jpg", "./img/4.jpg"];
 let doggoImages;
-
-let hasFlippedCard = false;
-let lockBoard = false;
 let firstCard, secondCard;
 
-// PLAY GAME!
-playGameButton.addEventListener("click", function () {
-  // 1 FIRST DELETE CARDS
-  deleteCards();
+const BoardGame = {
+  // TODO: Check when Game has finished
+  // Add counter, celebration, etc
+  gameStarted: false,
+  hasFlippedCard: false,
+  lockBoard: false,
+}
 
-  // 2 CALL THE API
-  getDoggos(inputDoggos.value / 2); // Rest of methods called here
+document.addEventListener('DOMContentLoaded', function () {
+    // Event listener for slider input
+    inputDoggos.addEventListener('input', createCards);
+
+    // Initial creation based on default slider value
+    createCards();
+
+  // PLAY GAME!
+  playGameButton.addEventListener('click', function () {
+    // if (BoardGame.gameStarted) return;
+    // BoardGame.gameStarted = true;
+    updateButtonPreGame();
+
+    createCards();
+    getDoggos(inputDoggos.value / 2); // API Calls, Rest of methods called here
+    updateButtonGameStarted();
+  });
 });
+
+// Update Play Game Button Before Game
+function updateButtonPreGame() {
+  playGameButton.innerHTML = 'Play Game!';
+  playGameButton.classList.remove('active');
+}
+
+// Update Play Game Button Game Started
+function updateButtonGameStarted() {
+  playGameButton.innerHTML = 'Game Started';
+  playGameButton.classList.add('active');
+}
 
 function getDoggos(amountOfDoggos) {
   /**
@@ -30,6 +59,7 @@ function getDoggos(amountOfDoggos) {
     alert(`How dare you hack this, max is 20 doggos!\n not ${amountOfDoggos} `);
     return;
   }
+
   doggoImages = []; // Set to empty array first
   const promise = fetch(`${DOG_URL}/${amountOfDoggos}`);
   promise
@@ -38,39 +68,45 @@ function getDoggos(amountOfDoggos) {
       return processingPromise;
     })
     .then(function (processedResponse) {
-      for (let dog of processedResponse["message"]) {
+      for (let dog of processedResponse['message']) {
         doggoImages.push(dog);
       }
 
-      // Call the methods after the API CALL
-      // 3 CREATE THE CARDS
-      createCards(inputDoggos.value);
 
       // 4 GIVE CARDS THE DOGGO IMAGES
       renderCards();
 
       // 5 SHUFFLE CARDS
       shuffleCards(inputDoggos.value);
+
     });
+
+    playGameButton.innerHtml = 'Game Started!';
 }
 
-function createCards(amountOfCards) {
+function createCards() {
   /**
    * Creates the DIV cards based on slider input
    * Does not populate the front card with random images
    */
-  for (let i = 0; i < amountOfCards; i++) {
+  deleteCards();
+
+  updateButtonPreGame();
+
+  const dogCardAmount = parseInt(inputDoggos.value);
+
+  for (let i = 0; i < dogCardAmount; i++) {
     // Create the Div
-    let newCard = document.createElement("div");
+    const newCard = document.createElement('div');
 
     // Append the front/back images
-    let backOfCard = document.createElement("img");
-    let frontOfCard = document.createElement("img");
+    const backOfCard = document.createElement('img');
+    const frontOfCard = document.createElement('img');
 
-    newCard.className = "card";
-    backOfCard.className = "card--back";
-    frontOfCard.className = "card--front";
-    backOfCard.src = "./img/doggo2.jpg";
+    newCard.className = 'card';
+    backOfCard.className = 'card--back';
+    frontOfCard.className = 'card--front';
+    backOfCard.src = './img/doggo2.jpg';
     //frontOfCard.src =
     //"https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg";
 
@@ -105,7 +141,7 @@ function renderCards() {
     eachCard[cardCounter].children[1].src = doggoImages[imageCounter];
 
     // Add Flip Card Event Listener to each card
-    eachCard[cardCounter].addEventListener("mousedown", flipCard);
+    eachCard[cardCounter].addEventListener('mousedown', flipCard);
   }
 }
 
@@ -113,7 +149,8 @@ function deleteCards() {
   /**
    * Selects all the cards and removes them from the card section
    */
-  cards.querySelectorAll("*").forEach((n) => n.remove()); // Select all the cards with .class
+  // cards.querySelectorAll("*").forEach((n) => n.remove()); // Select all the cards with .class
+  cards.innerHTML = '';
 }
 
 function flipCard() {
@@ -121,17 +158,17 @@ function flipCard() {
    * Adds a toggle to class to the card  element
    * That transforms the background from back to front
    */
-  if (lockBoard) return; // Edgecase lockboard after firstCard click
+  if (BoardGame.lockBoard) return; // Edgecase lockboard after firstCard click
   // Edgecase secondCard cannot be firstCard too
   if (this === firstCard) return;
   // Edgecase for repeatedly clicking on an already clicked card
-  if (this.classList.contains("flip")) return;
+  if (this.classList.contains('flip')) return;
 
-  this.classList.add("flip");
+  this.classList.add('flip');
 
-  if (!hasFlippedCard) {
+  if (!BoardGame.hasFlippedCard) {
     // First Click
-    hasFlippedCard = true;
+    BoardGame.hasFlippedCard = true;
     firstCard = this;
     return;
   }
@@ -153,23 +190,26 @@ function checkForMatch() {
 }
 
 function unflipCards() {
-  lockBoard = true;
+  BoardGame.lockBoard = true;
   setTimeout(() => {
-    firstCard.classList.remove("flip");
-    secondCard.classList.remove("flip");
+    firstCard.classList.remove('flip');
+    secondCard.classList.remove('flip');
 
     resetBoard();
   }, 1400);
 }
 
 function disableCards() {
-  firstCard.removeEventListener("click", flipCard);
-  secondCard.removeEventListener("click", flipCard);
+  firstCard.setAttribute('data-match', 'true');
+  secondCard.setAttribute('data-match', 'true');
+
+  firstCard.removeEventListener('click', flipCard);
+  secondCard.removeEventListener('click', flipCard);
   resetBoard();
 }
 
 function resetBoard() {
-  [hasFlippedCard, lockBoard] = [false, false];
+  [BoardGame.hasFlippedCard, BoardGame.lockBoard] = [false, false];
   [firstCard, secondCard] = [null, null];
 }
 
