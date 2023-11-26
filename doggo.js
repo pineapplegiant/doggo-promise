@@ -8,12 +8,16 @@ const cardCollection = cards.children; // The children of the cards (imgs)
 const inputDoggos = document.querySelector("input"); // Input Slider
 const playGameButton = document.querySelector(".button--play-game"); // Play-Game Button
 
-let images = ["./img/1.jpg", "./img/2.jpg", "./img/3.jpg", "./img/4.jpg"];
 let doggoImages;
-
-let hasFlippedCard = false;
-let lockBoard = false;
 let firstCard, secondCard;
+
+const BoardGame = {
+  // TODO: Check when Game has finished
+  // Add counter, celebration, etc
+  gameStarted: false,
+  hasFlippedCard: false,
+  lockBoard: false,
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     // Event listener for slider input
@@ -24,12 +28,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // PLAY GAME!
   playGameButton.addEventListener('click', function () {
-    // 3 CALL THE API
-    getDoggos(inputDoggos.value / 2); // Rest of methods called here
-    playGameButton.innerHTML = 'Game Started';
+    // if (BoardGame.gameStarted) return;
+    // BoardGame.gameStarted = true;
+    updateButtonPreGame();
+
+    createCards();
+    getDoggos(inputDoggos.value / 2); // API Calls, Rest of methods called here
+    updateButtonGameStarted();
   });
 });
 
+// Update Play Game Button Before Game
+function updateButtonPreGame() {
+  playGameButton.innerHTML = 'Play Game!';
+  playGameButton.classList.remove('active');
+}
+
+// Update Play Game Button Game Started
+function updateButtonGameStarted() {
+  playGameButton.innerHTML = 'Game Started';
+  playGameButton.classList.add('active');
+}
 
 function getDoggos(amountOfDoggos) {
   /**
@@ -72,8 +91,7 @@ function createCards() {
    */
   deleteCards();
 
-  // Update Play Game Button
-  playGameButton.innerHTML = 'Play Game!';
+  updateButtonPreGame();
 
   const dogCardAmount = parseInt(inputDoggos.value);
 
@@ -140,7 +158,7 @@ function flipCard() {
    * Adds a toggle to class to the card  element
    * That transforms the background from back to front
    */
-  if (lockBoard) return; // Edgecase lockboard after firstCard click
+  if (BoardGame.lockBoard) return; // Edgecase lockboard after firstCard click
   // Edgecase secondCard cannot be firstCard too
   if (this === firstCard) return;
   // Edgecase for repeatedly clicking on an already clicked card
@@ -148,9 +166,9 @@ function flipCard() {
 
   this.classList.add('flip');
 
-  if (!hasFlippedCard) {
+  if (!BoardGame.hasFlippedCard) {
     // First Click
-    hasFlippedCard = true;
+    BoardGame.hasFlippedCard = true;
     firstCard = this;
     return;
   }
@@ -172,7 +190,7 @@ function checkForMatch() {
 }
 
 function unflipCards() {
-  lockBoard = true;
+  BoardGame.lockBoard = true;
   setTimeout(() => {
     firstCard.classList.remove('flip');
     secondCard.classList.remove('flip');
@@ -182,13 +200,16 @@ function unflipCards() {
 }
 
 function disableCards() {
+  firstCard.setAttribute('data-match', 'true');
+  secondCard.setAttribute('data-match', 'true');
+
   firstCard.removeEventListener('click', flipCard);
   secondCard.removeEventListener('click', flipCard);
   resetBoard();
 }
 
 function resetBoard() {
-  [hasFlippedCard, lockBoard] = [false, false];
+  [BoardGame.hasFlippedCard, BoardGame.lockBoard] = [false, false];
   [firstCard, secondCard] = [null, null];
 }
 
